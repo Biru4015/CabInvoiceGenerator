@@ -41,18 +41,21 @@ namespace CabInvoiceGenerator
         /// </CalculateCabFare>
         /// <param name="rides"></param>
         /// <returns></returns>
-        public double CalculateCabFare(Ride[] rides)
+        public InvoiceSummary CalculateCabFare(Ride[] rides)
         {
+
+            int totalNumberOfRides = 0;
             double totalFare = 0;
             foreach (Ride ride in rides)
             {
                 totalFare += CalculateCabFare(ride.rideDistance, ride.rideTime);
+                totalNumberOfRides += 1;
             }
-            if (totalFare < MINIMUM_FARE)
-            {
-                return MINIMUM_FARE;
-            }
-            return totalFare;
+            InvoiceSummary invoiceSummery = new InvoiceSummary();
+            invoiceSummery.totalNumberOfRides = totalNumberOfRides;
+            invoiceSummery.totalFare = totalFare;
+            invoiceSummery.CalulateAverageFare();
+            return invoiceSummery;
         }
     }
 }
