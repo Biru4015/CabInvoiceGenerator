@@ -24,5 +24,19 @@ namespace CabInvoiceGeneratorTest
             InvoiceGenerator invoice = new InvoiceGenerator(cabRunningDistance, cabRunningTime);
             Assert.AreEqual(52, invoice.CalculateCabFare());
         }
+
+        /// <summary>
+        /// Test case 1.2
+        /// When testing for minimum fare
+        /// sending two parameters as cabRunningDistance and canRunningTime
+        /// </summary>
+        [Test]
+        public void GivenDistanceAndTimeToInvoiceGenerator_WhenCalculate_ShouldReturnMinimumFare()
+        {
+            double cabRunningDistance = 0.1;
+            double cabRunningTime = 1.0;
+            InvoiceGenerator invoice = new InvoiceGenerator(cabRunningDistance, cabRunningTime);
+            Assert.AreEqual(5, invoice.CalculateCabFare());
+        }
     }
 }
