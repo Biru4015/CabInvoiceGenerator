@@ -10,9 +10,9 @@ namespace CabInvoiceGenerator
         // Declared and Initialised Variables
         readonly private double distance;
         readonly private double time;
-        readonly private double costPerKiloMeter = 10.0;
-        readonly private double costPerMinute = 1.0;
-        readonly private double minimumFare = 5.0;
+        readonly private double COST_PER_KILO_METER = 10.0;
+        readonly private double COST_PER_MININUTES = 1.0;
+        readonly private double MINIMUM_FARE = 5.0;
 
         /// <InvoiceGenerator>
         /// Parameterised Constructor
@@ -32,10 +32,10 @@ namespace CabInvoiceGenerator
         /// <totalFare></returns>
         public double CalculateCabFare()
         {
-            double totalFare = (distance * costPerKiloMeter) + (time * costPerMinute);
-            if (totalFare < minimumFare)
+            double totalFare = (distance * COST_PER_KILO_METER) + (time * COST_PER_MININUTES);
+            if (totalFare < MINIMUM_FARE)
             {
-                return minimumFare;
+                return MINIMUM_FARE;
             }
             return totalFare;
         }
