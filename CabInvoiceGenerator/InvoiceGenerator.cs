@@ -7,10 +7,10 @@ namespace CabInvoiceGenerator
 {
     public class InvoiceGenerator
     {
-        // Declared and Initialised Variables
-        readonly private double COST_PER_KILO_METER = 10.0;
-        readonly private double COST_PER_MININUTES = 1.0;
-        readonly private double MINIMUM_FARE = 5.0;
+        //// Constant Variables
+        public const double COST_PER_KILO_METER = 10.0;
+        public const double COST_PER_MININUTES = 1.0;
+        public const double MINIMUM_FARE = 5.0;
 
         /// <InvoiceGenerator>
         /// Default Constructor
