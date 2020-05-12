@@ -2,6 +2,7 @@ using NUnit.Framework;
 using CabInvoiceGeneratorTest;
 using CabInvoiceGenerator;
 using System;
+using System.Collections.Generic;
 
 namespace CabInvoiceGeneratorTest
 {
@@ -90,6 +91,27 @@ namespace CabInvoiceGeneratorTest
                 returnInvoice = true;
             }
             Assert.AreEqual(exceptedInvoice, returnInvoice);
+        }
+
+        /// <summary>
+        /// Test case 4.1
+        /// Invoice Service
+        /// Given a user id, the Invoice Service gets the List of rides from the RideRepository,
+        /// And returns theInvoice.
+        /// </summary>
+        [Test]
+        public void GivenUserIDandRides_WhenCalculated_ShouldReturnInvoiceSummary()
+        {
+            string userId = "Biru@123";
+            Ride[] rides =
+            {
+                new Ride(2.0,1.0),
+                new Ride(2.5,1.5)
+            };
+            RideRepository rideRepository = new RideRepository();
+            rideRepository.AddRides(userId, rides);
+            InvoiceSummary retunTotal = invoice.CalculateCabFare(rideRepository.GetRides(userId));
+            Assert.AreEqual(47.5, retunTotal.totalFare);
         }
     }
 }
