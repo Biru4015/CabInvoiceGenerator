@@ -9,6 +9,7 @@ namespace CabInvoiceGeneratorTest
     public class Tests
     {
         InvoiceGenerator invoice = new InvoiceGenerator();
+        RideRepository rideRepository = new RideRepository();
 
         [SetUp]
         public void Setup()
@@ -25,7 +26,7 @@ namespace CabInvoiceGeneratorTest
         {
             double cabRunningDistance = 5.0;
             double cabRunningTime = 2.0;
-            Assert.AreEqual(52, invoice.CalculateCabFare(cabRunningDistance, cabRunningTime));
+            Assert.AreEqual(52, invoice.CalculateCabFare("normal", cabRunningDistance, cabRunningTime));
         }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace CabInvoiceGeneratorTest
         {
             double cabRunningDistance = 0.1;
             double cabRunningTime = 1.0;
-            Assert.AreEqual(5, invoice.CalculateCabFare(cabRunningDistance, cabRunningTime));
+            Assert.AreEqual(5, invoice.CalculateCabFare("normal",cabRunningDistance, cabRunningTime));
         }
 
         /// <summary>
@@ -51,8 +52,8 @@ namespace CabInvoiceGeneratorTest
             /// Multiple ride array
             Ride[] rides =
                 {
-                new Ride(2.0,1.0),
-                new Ride(2.5,1.5)
+                new Ride("normal",2.0,1.0),
+                new Ride("normal",2.5,1.5)
                 };
             var exceptedSummery = 47.5;
             InvoiceSummary returnSummery = invoice.CalculateCabFare(rides);
@@ -74,8 +75,8 @@ namespace CabInvoiceGeneratorTest
             //// sending two rides distance in double and also time in double
             Ride[] rides =
             {
-                new Ride(2.0,1.0),
-                new Ride(2.5,1.5)
+                new Ride("normal",2.0,1.0),
+                new Ride("normal",2.5,1.5)
             };
             InvoiceSummary returnSummery = invoice.CalculateCabFare(rides);
             InvoiceSummary expectedSummery = new InvoiceSummary
@@ -105,13 +106,32 @@ namespace CabInvoiceGeneratorTest
             string userId = "Biru@123";
             Ride[] rides =
             {
-                new Ride(2.0,1.0),
-                new Ride(2.5,1.5)
+                new Ride("normal",2.0,1.0),
+                new Ride("normal",2.5,1.5)
             };
-            RideRepository rideRepository = new RideRepository();
             rideRepository.AddRides(userId, rides);
             InvoiceSummary retunTotal = invoice.CalculateCabFare(rideRepository.GetRides(userId));
             Assert.AreEqual(47.5, retunTotal.totalFare);
+        }
+
+        /// <summary>
+        /// Test case 5.1
+        /// Invoice Service
+        /// Given a user id, will have 'normal' and 'premimun' ridethe Invoice Service gets the List of rides from the RideRepository,
+        /// and returns Total Average of normalFare and premimumFare.
+        /// </summary>
+        [Test]
+        public void GivenUserIdOfPremiumAndNormalUser_WhenCalculated_ShouldReturnsTotalFare()
+        {
+            string userId = "Birendra@123";
+            Ride[] rides =
+            {
+                new Ride("normal",2.0,1.0),
+                new Ride("premium",2.5,1.5)
+            };
+            rideRepository.AddRides(userId, rides);
+            InvoiceSummary retunTotal = invoice.CalculateCabFare(rideRepository.GetRides(userId));
+            Assert.AreEqual(61.5, retunTotal.totalFare);
         }
     }
 }
