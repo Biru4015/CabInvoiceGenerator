@@ -7,10 +7,15 @@ namespace CabInvoiceGenerator
 {
     public class InvoiceGenerator
     {
-        //// Constant Variables
-        public const double COST_PER_KILO_METER = 10.0;
-        public const double COST_PER_MININUTES = 1.0;
-        public const double MINIMUM_FARE = 5.0;
+        //// Constant for normal rides
+        public const double NORMAL_COST_PER_KILO_METER = 10.0;
+        public const double NORMAL_COST_PER_MININUTES = 1.0;
+        public const double NORMAL_MINIMUM_FARE = 5.0;
+
+        //// Constant for Premium rides
+        public const double PREMIUM_COST_PER_KILO_METER = 15.0;
+        public const double PREMIUM_COST_PER_MININUTES = 2.0;
+        public const double PREMIUM_MINIMUM_FARE = 20.0;
 
         /// <InvoiceGenerator>
         /// Default Constructor
@@ -26,14 +31,28 @@ namespace CabInvoiceGenerator
         /// </CalculateCabFare>
         /// <minimumFare></returns>
         /// <totalFare></returns>
-        public double CalculateCabFare(double runningDistance, double runningTime)
+        public double CalculateCabFare(string rideType, double runningDistance, double runningTime)
         {
-            double totalFare = (runningDistance * COST_PER_KILO_METER) + (runningTime * COST_PER_MININUTES);
-            if (totalFare < MINIMUM_FARE)
+            //// Calculated for Normal Fare
+            if (rideType == "normal")
             {
-                return MINIMUM_FARE;
+                double totalFare = (runningDistance * NORMAL_COST_PER_KILO_METER) + (runningTime * NORMAL_COST_PER_MININUTES);
+                if (totalFare < NORMAL_MINIMUM_FARE)
+                {
+                    return NORMAL_MINIMUM_FARE;
+                }
+                return totalFare;
             }
-            return totalFare;
+            //// Calculated Premium fare
+            if (rideType == "premium")
+            {
+                double totalFare = (runningDistance * PREMIUM_COST_PER_KILO_METER) + (runningTime * PREMIUM_COST_PER_MININUTES);
+                if (totalFare > PREMIUM_MINIMUM_FARE)
+                {
+                    return totalFare;
+                }
+            }
+            return PREMIUM_MINIMUM_FARE;
         }
 
         /// <CalculateCabFare>
@@ -48,14 +67,15 @@ namespace CabInvoiceGenerator
             double totalFare = 0;
             foreach (Ride ride in rides)
             {
-                totalFare += CalculateCabFare(ride.rideDistance, ride.rideTime);
+                totalFare += CalculateCabFare(ride.rideType, ride.rideDistance, ride.rideTime);
                 totalNumberOfRides += 1;
             }
-            InvoiceSummary invoiceSummery = new InvoiceSummary();
-            invoiceSummery.totalNumberOfRides = totalNumberOfRides;
-            invoiceSummery.totalFare = totalFare;
-            invoiceSummery.CalulateAverageFare();
-            return invoiceSummery;
+            //// Object of InvoiceSummery and accessing data from class
+            InvoiceSummary invoiceSummary = new InvoiceSummary();
+            invoiceSummary.totalNumberOfRides = totalNumberOfRides;
+            invoiceSummary.totalFare = totalFare;
+            invoiceSummary.CalulateAverageFare();
+            return invoiceSummary;
         }
     }
 }

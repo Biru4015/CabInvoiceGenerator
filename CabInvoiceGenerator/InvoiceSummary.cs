@@ -6,6 +6,7 @@ namespace CabInvoiceGenerator
 {
     public class InvoiceSummary
     {
+        //// Getters and Setters
         public int totalNumberOfRides { get; set; }
         public double totalFare { get; set; }
         public double averageFarePerRide { get; set; }
