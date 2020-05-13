@@ -31,10 +31,10 @@ namespace CabInvoiceGenerator
         /// </CalculateCabFare>
         /// <minimumFare></returns>
         /// <totalFare></returns>
-        public double CalculateCabFare(string rideType, double runningDistance, double runningTime)
+        public double CalculateCabFare(Ride.RideType rideType, double runningDistance, double runningTime)
         {
             //// Calculated for Normal Fare
-            if (rideType == "normal")
+            if (rideType == Ride.RideType.normal)
             {
                 double totalFare = (runningDistance * NORMAL_COST_PER_KILO_METER) + (runningTime * NORMAL_COST_PER_MININUTES);
                 if (totalFare < NORMAL_MINIMUM_FARE)
@@ -44,7 +44,7 @@ namespace CabInvoiceGenerator
                 return totalFare;
             }
             //// Calculated Premium fare
-            if (rideType == "premium")
+            if (rideType == Ride.RideType.premium)
             {
                 double totalFare = (runningDistance * PREMIUM_COST_PER_KILO_METER) + (runningTime * PREMIUM_COST_PER_MININUTES);
                 if (totalFare > PREMIUM_MINIMUM_FARE)

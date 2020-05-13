@@ -5,14 +5,19 @@
         //// Variable
         readonly public double rideDistance;
         readonly public double rideTime;
-        readonly public string rideType;
+
+        readonly public  RideType rideType;
+        public enum RideType
+        {
+            normal,premium
+        }
 
         /// <summary>
         ///  Parameterised Constructor
         /// </summary>
         /// <param name="runningDistance"></param>
         /// <param name="runningTime"></param>
-        public Ride(string rideType, double runningDistance, double runningTime)
+        public Ride(RideType rideType, double runningDistance, double runningTime)
         {
             this.rideType = rideType;
             this.rideDistance = runningDistance;
