@@ -106,12 +106,72 @@ namespace CabInvoiceGeneratorTest
             string userId = "Biru@123";
             Ride[] rides =
             {
-                new Ride("normal",2.0,1.0),
+                new Ride("normal",5.0,1.0),
+                new Ride("normal",2.5,1.5)
+            };
+            Ride[] rides1 =
+            {
+                new Ride("normal",2.0,5.0),
                 new Ride("normal",2.5,1.5)
             };
             rideRepository.AddRides(userId, rides);
+            rideRepository.AddRides(userId, rides1);
             InvoiceSummary retunTotal = invoice.CalculateCabFare(rideRepository.GetRides(userId));
-            Assert.AreEqual(47.5, retunTotal.totalFare);
+            Assert.AreEqual(129, retunTotal.totalFare);
+        }
+
+        /// <summary>
+        /// Test case 4.2
+        /// Invoice service
+        /// Given inputs without userID 
+        /// And return exception
+        /// </summary>
+        [Test]
+        public void GivenInputWithoutUserId_WhenCalculated_ShouldReturnsException()
+        {
+            string userId = null;
+            Ride[] rides =
+            {
+                new Ride("normal",2.0,1.0),
+                new Ride("normal",2.5,1.5)
+            };
+            try
+            {
+                rideRepository.AddRides(userId,rides);
+                InvoiceSummary retunTotal = invoice.CalculateCabFare(rideRepository.GetRides(userId));
+            }
+            catch (CustomException exception)
+            {
+                Assert.AreEqual("USERID_NOT_BE_NULL", exception.Message);
+            }
+        }
+
+        /// <summary>
+        /// Test case 4.3
+        /// When given multiple userId with Multiple Rides
+        /// Should Returns total Invoice
+        /// </summary>
+        [Test]
+        public void GivenMultipleUserIdWithMultipleRides_WhenCalculated_ShouldReturnsInvoiceSummary()
+        {
+            String userId1 = "Birendra@123";
+            Ride[] rides1 =
+            {
+                new Ride("normal",2.0,1.0),
+                new Ride("normal",2.5,1.5)
+            };
+            String userId2 = "Ankit@321";
+            Ride[] rides2 =
+            {
+                new Ride("normal",5.0,7.0),
+                new Ride("normal",2.5,1.5)
+            };
+            rideRepository.AddRides(userId1, rides1);
+            rideRepository.AddRides(userId2, rides2);
+            InvoiceSummary retunTotal = invoice.CalculateCabFare(rideRepository.GetRides(userId1));
+            InvoiceSummary retunTotal1 = invoice.CalculateCabFare(rideRepository.GetRides(userId2));
+            Assert.AreEqual(131, retunTotal.totalFare+retunTotal1.totalFare);
+
         }
 
         /// <summary>
@@ -123,7 +183,7 @@ namespace CabInvoiceGeneratorTest
         [Test]
         public void GivenUserIdOfPremiumAndNormalUser_WhenCalculated_ShouldReturnsTotalFare()
         {
-            string userId = "Birendra@123";
+            string userId = "Birendra@12345";
             Ride[] rides =
             {
                 new Ride("normal",2.0,1.0),
