@@ -3,18 +3,20 @@ using CabInvoiceGeneratorTest;
 using CabInvoiceGenerator;
 using System;
 using System.Collections.Generic;
+using Moq;
 
 namespace CabInvoiceGeneratorTest
 {
+    /// <summary>
+    /// This class conatins the code of test cases
+    /// </summary>
     public class Tests
     {
+        /// <summary>
+        /// These are objects of differents classes 
+        /// </summary>
         InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
         RideRepository rideRepository = new RideRepository();
-
-        [SetUp]
-        public void Setup()
-        {
-        }
 
         /// <summary>
         /// Test case 1.1
