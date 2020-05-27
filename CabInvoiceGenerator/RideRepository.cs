@@ -4,7 +4,10 @@ using System.Text;
 
 namespace CabInvoiceGenerator
 {
-    public class RideRepository
+    /// <summary>
+    /// This is ride repository class for storing ride details.
+    /// </summary>
+    public class RideRepository:IRideRepository
     {
         public Dictionary<string, List<Ride>> userRideObj;
         public RideRepository()

@@ -5,17 +5,27 @@ using CabInvoiceGenerator;
 
 namespace CabInvoiceGenerator
 {
+    /// <summary>
+    /// This class contains the code for generating invoice
+    /// </summary>
     public class InvoiceGenerator
     {
-        //// Constant for normal rides
-        public const double COST_PER_KILO_METER = 10.0;
-        public const double COST_PER_MININUTES = 1.0;
-        public const double MINIMUM_FARE = 5.0;
+        IRideRepository rideRepository = null;
+        
+        public InvoiceGenerator(IRideRepository rideRepository)
+        {
+            this.rideRepository = rideRepository;
+        }
 
-        //// Constant for Premium rides
-       /* public const double PREMIUM_COST_PER_KILO_METER = 15.0;
-        public const double PREMIUM_COST_PER_MININUTES = 2.0;
-        public const double PREMIUM_MINIMUM_FARE = 20.0;*/
+        public void AddRide(string userId, Ride[] rides)
+        {
+            this.rideRepository.AddRides(userId,rides);
+        }
+
+        public Ride[] GetRide(string userId)
+        {
+            return this.rideRepository.GetRides(userId);
+        }
 
         /// <InvoiceGenerator>
         /// Default Constructor

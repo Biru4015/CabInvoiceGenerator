@@ -5,8 +5,14 @@ using CabInvoiceGenerator;
 
 namespace CabInvoiceGenerator
 {
+    /// <summary>
+    /// This class contains the code for using Enum type varibales.
+    /// </summary>
     public class CabRide
     {
+        /// <summary>
+        /// There are declared as constant
+        /// </summary>
         public static readonly CabRide NORMAL = new CabRide(10.0,1.0,5.0);
         public static readonly CabRide PREMIUM = new CabRide(15.0, 2.0, 20.0);
 

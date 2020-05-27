@@ -4,6 +4,9 @@ using System.Text;
 
 namespace CabInvoiceGenerator
 {
+    /// <summary>
+    /// This class contains the code for generating invoice summary
+    /// </summary>
     public class InvoiceSummary
     {
         //// Getters and Setters
